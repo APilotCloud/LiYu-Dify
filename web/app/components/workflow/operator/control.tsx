@@ -40,7 +40,7 @@ const Control = () => {
     nodesReadOnly,
     getNodesReadOnly,
   } = useNodesReadOnly()
-  const { handleToggleMaximizeCanvas } = useWorkflowCanvasMaximize()
+  const { handleToggleMaximizeCanvas, handleMaximizeCanvas } = useWorkflowCanvasMaximize()
 
   const searchParams = useSearchParams()
   const isIframe = searchParams.get('isIframe')
@@ -55,9 +55,9 @@ const Control = () => {
 
   useEffect(() => {
     if (isIframe) {
-      handleToggleMaximizeCanvas();
+      handleMaximizeCanvas();
     }
-  }, isIframe)
+  }, [isIframe])
 
   return (
     <div className="pointer-events-auto flex flex-col items-center rounded-lg border-[0.5px] border-components-actionbar-border bg-components-actionbar-bg p-0.5 text-text-tertiary shadow-lg">

@@ -1,0 +1,51 @@
+openapi: 3.1.0
+info:
+  title: XlsxDB数据查询
+  description: 提供基于SQL语法的Excel数据查询服务, 支持参数化查询
+  version: 1.8.0
+servers:
+  - url: https://dahuaconsulting.cn/dahua/docker-api
+paths:
+  /xlsx-db/select:
+    post:
+      summary: 查询Xlsx数据库
+      operationId: SelectXlsxData
+      description: SQL语句+字典参数Params(可选)
+      requestBody:
+        description: 请求参数
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sql:
+                  type: string
+                  description: 查询语句
+                  example: "SELECT * FROM sheet1 WHERE name = :name"
+                params:
+                  type: object
+                  nullable: true
+                  description: 查询语句参数
+                  example: {"name": "Test User"}
+              required:
+                - sql
+      responses:
+        '200':
+          description: 成功的查询响应
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  description: 结果行数据
+        '500':
+          description: 执行查询sql失败
+      security:
+        - apiKeyAuth: []
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
